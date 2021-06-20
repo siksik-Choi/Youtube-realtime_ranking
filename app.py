@@ -1,30 +1,28 @@
 #!/usr/bin/python3
-#-*- coding: utf-8 -*- 
+#-*- coding: utf-8 -*-
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify 
 from flask import render_template
-from flask import request
+from flask import request 
+import argparse
+import subprocess 
+from elasticsearch import Elasticsearch
+
+es_host="127.0.0.1"
+es_port="9200"
 
 app = Flask(__name__)
 
-@app.route('/',methods = ['GET'])
-def home():
-        return render_template('startpage.html')
+@app.route('/', methods=['GET'])
+def index():
+	es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
+	lastres = es.get(index='web', doc_type='words', id=1)	
 
-@app.route('/rank',methods=['GET'])
-def ranking():
-	error = None
-	if request.method == 'GET':
-		return render_template('rankingpage.html')
+	eswordls = lastres['_source']['words']
+	esfreqls = lastres['_source']['frequencies']		
 
-@app.route('/simil',methods=['GET'])
-def similarlity():
-	error = None
-	if request.method == 'GET':
-		return render_template('similarlity.html')
+	return render_template('rankingpage.html', data1=eswordls, data2=esfreqls) 
 
 
 if __name__ == '__main__':
-        app.run(debug=True)
-
-
+	app.run(debug=True)
