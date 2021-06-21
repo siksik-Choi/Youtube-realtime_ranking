@@ -21,7 +21,8 @@ def index():
 	eswordls = lastres['_source']['words']
 	esfreqls = lastres['_source']['frequencies']		
 
-	return render_template('rankingpage.html', data1=eswordls, data2=esfreqls) 
+	return render_template('index.html', data1=eswordls, data2=esfreqls) 
+
 
 
 if __name__ == '__main__':
