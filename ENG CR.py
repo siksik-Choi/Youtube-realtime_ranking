@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -12,7 +11,7 @@ from nltk.corpus import stopwords
  
 def data_text_cleaning(data):
  
-    # 영문자 이외 문자는 공백으로 변환
+    # 영문자 이외 제거
     only_english = re.sub('[^a-zA-Z]', ' ', data)
  
     # 소문자 변환
@@ -20,13 +19,8 @@ def data_text_cleaning(data):
  
     # 불용어 제거
     stops = set(stopwords.words('english'))
-    no_stops = [word for word in no_capitals if not word in stops]
+    stemmer_words = [word for word in no_capitals if not word in stops]
  
-    # 어간 추출
-    stemmer = nltk.stem.SnowballStemmer('english')
-    stemmer_words = [stemmer.stem(word) for word in no_stops]
- 
-    # 공백으로 구분된 문자열로 결합하여 결과 반환
     return stemmer_words
 
 
@@ -75,9 +69,9 @@ if __name__ == '__main__':
            
             i += 1
 
-        print("---------------------------------------------")
+        #print("---------------------------------------------")
         #print(my_para)
-        print("---------------------------------------------")
+        #print("---------------------------------------------")
        
         
         okt = Okt()
@@ -95,7 +89,7 @@ if __name__ == '__main__':
             for n in noun:
                 cnt = 0
                 #offical video, 광고, short태그 등은 유의미하지 않으므로 제거
-                if(n=='offici'or n== 'video' or n== 'ad' or n== 'short') : 
+                if(n=='official'or n== 'video' or n== 'ad' or n== 'short' or n=='shorts' or n== 'vs') : 
                   continue
                 if(len(n)>1):
                     while cnt < weight//10:
@@ -111,7 +105,7 @@ if __name__ == '__main__':
                 print(v)
   
 
-        ("---------------------------------------------")
+        #("---------------------------------------------")
         
 
 
