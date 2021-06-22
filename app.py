@@ -16,12 +16,16 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
 	es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
-	lastres = es.get(index='chart', doc_type='words', id=1)	
+	usares = es.get(index='usa', doc_type='chart', id=1)	
+	usawordls = usares['_source']['words']
 
-	eswordls = lastres['_source']['words']
-	esfreqls = lastres['_source']['frequencies']		
+	canadares = es.get(index='canada', doc_type='chart', id=1)        
+	canadawordls = canadares['_source']['words']
 
-	return render_template('index.html', data1=eswordls, data2=esfreqls) 
+	koreares = es.get(index='korea', doc_type='chart', id=1)        
+	koreawordls = koreares['_source']['words']
+
+	return render_template('index.html', data1=koreawordls, data2=usawordls, data3=canadawordls) 
 
 
 
