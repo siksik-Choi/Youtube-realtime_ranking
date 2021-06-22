@@ -85,7 +85,7 @@ if __name__ == '__main__':
         
         count = Counter(words)
 
-        noun_list = count.most_common(100)
+        noun_list = count.most_common(10)
         for v in noun_list:
                 print(v)
         
@@ -106,9 +106,9 @@ if __name__ == '__main__':
         print("---------------------------------------------")
         # elasticsearch에 저장
         es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
-        e={'url':URL, 'words':chart_words, 'frequencies':chart_freq}
+        e={'url':URL,'words':chart_words,'frequencies':chart_freq}
 
-        source = es.index(index='Chart', doc_type='chart', id = 1, body = e)
+        source = es.index(index='chart', doc_type='words', id = 1, body = e)
         print(source)
 
 
