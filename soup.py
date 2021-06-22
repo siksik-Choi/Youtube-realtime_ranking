@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3 
 
 from bs4 import BeautifulSoup
 import requests
@@ -124,9 +124,14 @@ if __name__ == '__main__':
         es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
         e={'url':URL,'words':chart_words,'frequencies':chart_freq}
 
+        source = es.index(index='usa', doc_type='chart', id = 1, body = e)
+        print(source) 
+         
         docs = es.search(index = 'usa')
         id = docs['hits']['total']['value']
-
+        if(id==0):
+            id=1 
+        print(id) 
         source = es.index(index='usa', doc_type='chart', id = id+1, body = e)
         print(source)
 
@@ -215,12 +220,17 @@ if __name__ == '__main__':
         es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
         e={'url':URL,'words':chart_words,'frequencies':chart_freq}
 
-        docs = es.search(index = 'canada')
-        id = docs['hits']['total']['value']
-
-        source = es.index(index='canada', doc_type='chart', id = id+1, body = e)
+        source = es.index(index='canada', doc_type='chart', id = 1, body = e)
         print(source)
 
+        docs = es.search(index = 'canada')
+        id = docs['hits']['total']['value']
+        if(id==0):
+            id=1 
+        print(id)
+        source = es.index(index='canada', doc_type='chart', id = id+1, body = e)
+        print(source)
+        
         ##########################################################
         ##KR
         URL = 'https://www.youtube.com/feed/explore/?gl=KR'
@@ -304,12 +314,16 @@ if __name__ == '__main__':
         es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
         e={'url':URL,'words':chart_words,'frequencies':chart_freq}
 
-        docs = es.search(index = 'korea')
-        id = docs['hits']['total']['value']
-
-        source = es.index(index='korea', doc_type='chart', id = id+1, body = e)
+        source = es.index(index='korea', doc_type='chart', id = 1, body = e)
         print(source)
 
+        docs = es.search(index = 'korea')
+        id = docs['hits']['total']['value']
+        if(id==0):
+            id=1 
+        print(id)
+        source = es.index(index='korea', doc_type='chart', id = id+1, body = e)
+        print(source)
 
 
     except BaseException:
