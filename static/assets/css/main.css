@@ -1341,7 +1341,7 @@ input, select, textarea {
 	display: -moz-flex;
 	display: -webkit-flex;
 	display: -ms-flex;
-	display: flex;
+	display: inline-flex;
 	margin-bottom: 10;
 	list-style: none;
 	padding-left: 0;
