@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <!--
 	Dimension by HTML5 UP
 	html5up.net | @ajlkn
@@ -41,7 +41,9 @@
 						<nav>
 							<ul>
 								<li><a href="#info">Info</a></li>
-								<li><a href="#rank">Rank</a></li>
+								<li><a href="#kor_rank">Kor_Rank</a></li>
+								<li><a href="#usa_rank">USA_Rank</a></li>
+								<li><a href="#uk_rank">UK</a></li>
 								<li><a href="#comp">Compare</a></li>
 								<!--<li><a href="#contact">Contact</a></li>-->
 							</ul>
@@ -60,22 +62,29 @@
 						</article>
 
 						<!-- rank -->
-						<article id="rank">
-							<h2 class="major">Ranking</h2>
-							<nav>
-								<ul>
-									<li><a href="#kor">한국</a></li>
-									<li><a href="#usa">USA</a></li>
-									<li><a href="#uk">UK</a></li>
-								</ul>
-							</nav>
-
+						<article id="kor_rank">
+							<h2 class="major">Korea Ranking</h2>
 							{%for a in range(10)%}
 							{{a+1}}&nbsp&nbsp <a href="http://www.youtube.com/results?search_query={{data1[a]}}"> {{data1[a]}}</a>&nbsp&nbsp {{data2[a]}}<br>
 							{%endfor%}
-
+							
 						</article>
 
+						<article id="usa_rank">
+							<h2 class="major">USA Ranking</h2>
+							{%for a in range(10)%}
+							{{a+1}}&nbsp&nbsp <a href="http://www.youtube.com/results?search_query={{data1[a]}}"> {{data1[a]}}</a>&nbsp&nbsp {{data2[a]}}<br>
+							{%endfor%}
+							
+						</article>
+
+						<article id="uk_rank">
+							<h2 class="major">UK Ranking</h2>
+							{%for a in range(10)%}
+							{{a+1}}&nbsp&nbsp <a href="http://www.youtube.com/results?search_query={{data1[a]}}"> {{data1[a]}}</a>&nbsp&nbsp {{data2[a]}}<br>
+							{%endfor%}
+							
+						</article>
 						<!-- comp -->
 						<article id="comp">
 							<h2 class="major">Compare</h2>
