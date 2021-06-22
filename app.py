@@ -16,7 +16,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
 	es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
-	lastres = es.get(index='web', doc_type='words', id=1)	
+	lastres = es.get(index='chart', doc_type='words', id=1)	
 
 	eswordls = lastres['_source']['words']
 	esfreqls = lastres['_source']['frequencies']		
