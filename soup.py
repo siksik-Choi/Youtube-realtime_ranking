@@ -4,11 +4,16 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import os
+import sys
+from elasticsearch import Elasticsearch
 from konlpy.tag import Okt
 from collections import Counter
  
 def hfilter(s):
     return re.sub(u'[^ \u3130-\u318f\uac00-\ud7a3]+','',s)
+
+es_host="127.0.0.1"
+es_port="9200"
 
 if __name__ == '__main__':
     try:
@@ -51,9 +56,11 @@ if __name__ == '__main__':
             i += 1
 
         print("---------------------------------------------")
+        # 제목리스트 출력
         print(my_para)
+
         print("---------------------------------------------")
-       
+        # 제목에서 단어를 추출해 가중치 계산
         
         okt = Okt()
         word_d = {}
@@ -78,13 +85,32 @@ if __name__ == '__main__':
         
         count = Counter(words)
 
-        noun_list = count.most_common(100)
+        noun_list = count.most_common(10)
         for v in noun_list:
                 print(v)
         
+        print("---------------------------------------------")
+        #가중치 계산한 값을 각각 리스트에 저장
 
-        ("---------------------------------------------")
+        chart_words = []
+        chart_freq = []
+
+        for n in noun_list:
+            chart_words.append(n[0])
+            chart_freq.append(n[1])
         
+        print(chart_words)
+        print("---------------------------------------------")
+        print(chart_freq)
+
+        print("---------------------------------------------")
+        # elasticsearch에 저장
+        es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
+        e={'url':URL,'words':chart_words,'frequencies':chart_freq}
+
+        source = es.index(index='chart', doc_type='words', id = 1, body = e)
+        print(source)
+
 
 
     except BaseException:
