@@ -264,6 +264,8 @@ if __name__ == '__main__':
             noun = okt.nouns(hsent)
             for n in noun:
                 cnt = 0
+                if(n=='방송'):
+                    continue
                 if(len(n)>1):
                     while cnt < weight//10:
                         words.append(n)
