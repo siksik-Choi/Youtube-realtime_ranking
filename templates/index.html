@@ -80,7 +80,7 @@
 						<article id="kor_rank">
 							<h2 class="major">Korea Ranking</h2>
 							{%for a in range(10)%}
-							<center>{{a+1}}&nbsp&nbsp <a href="http://www.youtube.com/results?search_query={{data1[a]}}"> {{data1[a]}}</a><br> </center> 
+							<center>{{a+1}}&nbsp&nbsp <a href="http://www.youtube.com/results?search_query={{kdata1[a]}}"> {{kdata1[a]}}</a><br> </center> 
 							{%endfor%}
 
 						</article>
@@ -104,9 +104,11 @@
 						<!-- comp -->
 						<article id="comp">
 							<h2 class="major">Compare</h2>
-							{%for b in range(10)%}
-              <center>{{b+1}}&nbsp&nbsp {{data1[b]}}</a>&nbsp&nbsp {{data2[b]}}<br> </center>
-              {%endfor%}	
+							<center>{{csr}}% 의 유사도</center></br>
+ 							<center>최신 데이터&emsp;&emsp;이전 데이터</center><br> 
+							{%for a in range(10)%}
+                                                        <center>{{kdata1[a]}}</a>&emsp;&emsp;&emsp;{{kdata2[a]}}<br></center> 
+                                                        {%endfor%}	
 						</article>
 
 					</div>

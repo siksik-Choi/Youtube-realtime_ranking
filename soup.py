@@ -36,7 +36,7 @@ def kfilter(s):
 es_host="127.0.0.1"
 es_port="9200"
 
-if __name__ == '__main__':
+def elasID():
     try:
         ##########################################################
         ##USA
@@ -95,8 +95,7 @@ if __name__ == '__main__':
                     while cnt < weight//10:
                       words.append(n)
                       cnt = cnt +1
-            
-        weight = weight-1
+             weight = weight-1
         
         count = Counter(words)
 
@@ -191,8 +190,7 @@ if __name__ == '__main__':
                     while cnt < weight//10:
                       words.append(n)
                       cnt = cnt +1
-            
-        weight = weight-1
+             weight = weight-1
         
         count = Counter(words)
 
@@ -286,8 +284,7 @@ if __name__ == '__main__':
                     while cnt < weight//10:
                         words.append(n)
                         cnt = cnt +1
-            
-        weight = weight-1
+            weight = weight-1
         
         count = Counter(words)
 
@@ -324,7 +321,7 @@ if __name__ == '__main__':
         print(id)
         source = es.index(index='korea', doc_type='chart', id = id+1, body = e)
         print(source)
-
+        return id+1
 
     except BaseException:
         import sys
