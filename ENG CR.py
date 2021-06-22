@@ -5,10 +5,12 @@ import re
 import os
 import nltk
 nltk.download('punkt')
+nltk.download('stopwords')
 from konlpy.tag import Okt
 from collections import Counter
 from nltk.corpus import stopwords
  
+
 def data_text_cleaning(data):
  
     # 영문자 이외 제거
@@ -30,9 +32,9 @@ def kfilter(s):
 
 if __name__ == '__main__':
     try:
-        URL = 'https://www.youtube.com/feed/explore/?gl=GB'
-        #URL = 'https://www.youtube.com/feed/explore/?gl=KR'
-        #URL = 'https://www.youtube.co/feed/explore/?gl=CA'
+        #ctc : country code
+        #ctc='CA' #ctc를 인자로 두고 GB KR CA 중 하나의 값을 주면 됨
+        URL = 'https://www.youtube.com/feed/explore/?gl='+ctc
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, 'html.parser', from_encoding="utf8")
         search_results = soup.findAll("script")
@@ -69,46 +71,57 @@ if __name__ == '__main__':
            
             i += 1
 
-        #print("---------------------------------------------")
-        #print(my_para)
-        #print("---------------------------------------------")
-       
-        
         okt = Okt()
         word_d = {}
         words = []
         weight = 60
-
-        for para in my_para:
-            #hsent = efilter(para)
-            #print(hsent)
+        
+        if(ctc=='GB'or ctc=='CA'):
+          for para in my_para:
     
-            noun = data_text_cleaning(para)
-            #print(noun)
+              noun = data_text_cleaning(para)
 
-            for n in noun:
-                cnt = 0
-                #offical video, 광고, short태그 등은 유의미하지 않으므로 제거
-                if(n=='official'or n== 'video' or n== 'ad' or n== 'short' or n=='shorts' or n== 'vs') : 
-                  continue
-                if(len(n)>1):
-                    while cnt < weight//10:
-                      words.append(n)
-                      cnt = cnt +1
+              for n in noun:
+                  cnt = 0
+                  #offical video, 광고, short태그 등은 유의미하지 않으므로 제거
+                  if(n=='official'or n== 'video' or n== 'ad' or n== 'short' or n=='shorts' or n== 'vs') :
+                    continue
+                  if(len(n)>1):
+                      while cnt < weight//10:
+                        words.append(n)
+                        cnt = cnt +1
             
-            weight = weight-1
+              weight = weight-1
         
-        count = Counter(words)
+          count = Counter(words)
 
-        noun_list = count.most_common(10)
-        for v in noun_list:
-                print(v)
+          noun_list = count.most_common(10)
+          for v in noun_list:
+                  print(v)
+
+
+        if(ctc=='KR'):
+          for para in my_para:
+             hsent = kfilter(para)
+             noun = okt.nouns(hsent)
+             for n in noun:
+                 cnt = 0
+                 if(len(n)>1):
+                     while cnt < weight//10:
+                         words.append(n)
+                         cnt = cnt +1
+            
+             weight = weight-1
+        
+          count = Counter(words)
+
+          noun_list = count.most_common(10)
+          for v in noun_list:
+            print(v)
+
+
+          
   
-
-        #("---------------------------------------------")
-        
-
-
     except BaseException:
         import sys
         print(sys.exc_info()[0])
