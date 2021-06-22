@@ -4,16 +4,12 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import os
-import sys
-from elasticsearch import Elasticsearch
 from konlpy.tag import Okt
 from collections import Counter
+import cosine
  
 def hfilter(s):
     return re.sub(u'[^ \u3130-\u318f\uac00-\ud7a3]+','',s)
-
-es_host="127.0.0.1"
-es_port="9200"
 
 if __name__ == '__main__':
     try:
@@ -55,12 +51,10 @@ if __name__ == '__main__':
            
             i += 1
 
-        print("---------------------------------------------")
-        # 제목리스트 출력
-        print(my_para)
-
-        print("---------------------------------------------")
-        # 제목에서 단어를 추출해 가중치 계산
+        #print("---------------------------------------------")
+        #print(my_para)
+        #print("---------------------------------------------")
+       
         
         okt = Okt()
         word_d = {}
@@ -69,10 +63,10 @@ if __name__ == '__main__':
 
         for para in my_para:
             hsent = hfilter(para)
-            print(hsent)
+            #print(hsent)
 
             noun = okt.nouns(hsent)
-            print(noun)
+            #print(noun)
 
             for n in noun:
                 cnt = 0
@@ -86,31 +80,30 @@ if __name__ == '__main__':
         count = Counter(words)
 
         noun_list = count.most_common(100)
+        ("---------------------------------------------")
+        
+        f = open("input.txt", 'a+')
+
         for v in noun_list:
-                print(v)
-        
-        print("---------------------------------------------")
-        #가중치 계산한 값을 각각 리스트에 저장
+          print(v)
+          f.write(v[0])
+        f.write("\n")
+        f.close()
 
-        chart_words = []
-        chart_freq = []
+        f = open("input.txt", 'r')
+        line = f.readline() 
+        line = line.strip() #줄 바꿈 (\n) 제거
+        recent = line
+        print(recent) #1번째 줄입니다.
 
-        for n in noun_list:
-            chart_words.append(n[0])
-            chart_freq.append(n[1])
-        
-        print(chart_words)
-        print("---------------------------------------------")
-        print(chart_freq)
+        line = f.readline()
+        line = line.strip() 
+        past = line
+        print(past) #2번째 줄입니다.
 
-        print("---------------------------------------------")
-        # elasticsearch에 저장
-        es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
-        e={'url':URL, 'words':chart_words, 'frequencies':chart_freq}
+        f.close()
 
-        source = es.index(index='Chart', doc_type='chart', id = 1, body = e)
-        print(source)
-
+        cosine.cosine(recent, past)
 
 
     except BaseException:
