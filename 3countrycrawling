@@ -298,7 +298,7 @@ if __name__ == '__main__':
         es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
         e={'url':URL,'words':chart_words,'frequencies':chart_freq}
 
-        source = es.index(index='korea', doc_type='words', id = 1, body = e)
+        source = es.index(index='korea', doc_type='chart', id = 1, body = e)
         print(source)
 
 
