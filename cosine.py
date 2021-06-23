@@ -30,6 +30,5 @@ def cos(recent, past):
   v2_arr = np.array(make_matrix(feats, past)) 
 
   cs = cos_sim(v1_arr, v2_arr) 
-  
+
   return cs
-  # 인기 검색어 변동이 큽니다

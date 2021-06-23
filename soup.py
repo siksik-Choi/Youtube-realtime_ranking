@@ -100,10 +100,8 @@ def elasID():
         count = Counter(words)
 
         noun_list = count.most_common(10)
-        for v in noun_list:
-                print(v)
 
-        print("---------------------------------------------")
+        #print("---------------------------------------------")
         #가중치 계산한 값을 각각 리스트에 저장
 
         chart_words = []
@@ -113,26 +111,26 @@ def elasID():
             chart_words.append(n[0])
             chart_freq.append(n[1])
         
-        print(chart_words)
-        print("---------------------------------------------")
-        print(chart_freq)
+        #print(chart_words)
+        #print("---------------------------------------------")
+        #print(chart_freq)
 
-        print("---------------------------------------------")
+        #print("---------------------------------------------")
         # elasticsearch에 저장
 
         es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
         e={'url':URL,'words':chart_words,'frequencies':chart_freq}
 
         source = es.index(index='usa', doc_type='chart', id = 1, body = e)
-        print(source) 
+        #print(source) 
          
         docs = es.search(index = 'usa')
         id = docs['hits']['total']['value']
         if(id==0):
             id=1 
-        print(id) 
+        #print(id) 
         source = es.index(index='usa', doc_type='chart', id = id+1, body = e)
-        print(source)
+        #print(source)
 
         ##########################################################
         ##CA
@@ -195,12 +193,9 @@ def elasID():
         count = Counter(words)
 
         noun_list = count.most_common(10)
-        for v in noun_list:
-            print(v)
         
-        print("---------------------------------------------")
+        #print("---------------------------------------------")
         #가중치 계산한 값을 각각 리스트에 저장
-
         chart_words = []
         chart_freq = []
 
@@ -208,26 +203,26 @@ def elasID():
             chart_words.append(n[0])
             chart_freq.append(n[1])
         
-        print(chart_words)
-        print("---------------------------------------------")
-        print(chart_freq)
+        #print(chart_words)
+        #print("---------------------------------------------")
+        #print(chart_freq)
 
-        print("---------------------------------------------")
+        #print("---------------------------------------------")
         # elasticsearch에 저장
 
         es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
         e={'url':URL,'words':chart_words,'frequencies':chart_freq}
 
         source = es.index(index='canada', doc_type='chart', id = 1, body = e)
-        print(source)
+        #print(source)
 
         docs = es.search(index = 'canada')
         id = docs['hits']['total']['value']
         if(id==0):
             id=1 
-        print(id)
+        #print(id)
         source = es.index(index='canada', doc_type='chart', id = id+1, body = e)
-        print(source)
+        #print(source)
         
         ##########################################################
         ##KR
@@ -289,10 +284,10 @@ def elasID():
         count = Counter(words)
 
         noun_list = count.most_common(10)
-        for v in noun_list:
-          print(v)
+
+
         
-        print("---------------------------------------------")
+        #print("---------------------------------------------")
         #가중치 계산한 값을 각각 리스트에 저장
 
         chart_words = []
@@ -302,35 +297,36 @@ def elasID():
             chart_words.append(n[0])
             chart_freq.append(n[1])
         
-        print(chart_words)
-        print("---------------------------------------------")
-        print(chart_freq)
+        #print(chart_words)
+        #print("---------------------------------------------")
+        #print(chart_freq)
 
-        print("---------------------------------------------")
+        #print("---------------------------------------------")
         # elasticsearch에 저장
         es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
         e={'url':URL,'words':chart_words,'frequencies':chart_freq}
 
         source = es.index(index='korea', doc_type='chart', id = 1, body = e)
-        print(source)
+        #print(source)
 
         docs = es.search(index = 'korea')
         id = docs['hits']['total']['value']
         if(id==0):
             id=1 
-        print(id)
+        #print(id)
         source = es.index(index='korea', doc_type='chart', id = id+1, body = e)
-        print(source)
+        #print(source)
         return id+1
 
     except BaseException:
         import sys
-        print(sys.exc_info()[0])
+        #print(sys.exc_info()[0])
         import traceback
-        print(traceback.format_exc())
+        #print(traceback.format_exc())
 
     """ 
     finally:
         print("\n" + "Press 'Enter' to close the window :)")
         input() 
     """
+

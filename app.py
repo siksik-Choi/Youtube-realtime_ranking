@@ -34,7 +34,7 @@ def index():
 	koreawordls2 = koreares2['_source']['words']
 	korstr2 = "".join(koreawordls2)
 
-	cosresult = cosine.cos(korstr1,korstr2)*100 
+	cosresult = round(cosine.cos(korstr1,korstr2)*100,2) 
 	
 	return render_template('index.html', kdata1=koreawordls1,kdata2=koreawordls2, data2=usawordls, data3=canadawordls,csr=cosresult) 
 
